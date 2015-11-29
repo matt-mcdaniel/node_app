@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>User Index</title>
+  <style>
+    * {
+      font-family: Helvetica, Arial, sans-serif;
+    }
+    div {
+      display: flex;
+      align-items: center;
+      padding: 1em;
+      font-size: 1.2em;
+    }
+    div a {
+      padding-left: 0.5em;
+    }
+    dt {
+      font-weight: bolder;
+      display: inline-block;
+      width: 8em;
+    }
+    dd {
+      display: inline-block;
+      margin-left: 0;
+      line-height: 1.5;
+    }
+    .edit {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>{{person.FirstName}} {{person.LastName}}</h1>
+
+  <p>
+    <a href="#" onclick="edit()">Edit</a>
+    <a href="#" onclick="del()">Delete</a>
+  </p>
+
+  <dl>
+    <dt>Age</dt>
+    <dd class="view">{{person.Age}}</dd>
+    <dd class="edit"><input id="age" type="text" value="{{person.Age}}"></dd>
+    </br>
+    <dt>Race</dt>
+    <dd class="view">{{person.Race}}</dd>
+    <dd class="edit"><input id="race" type="text" value="{{person.Race}}"></dd>
+    </br>
+    <dt>State</dt>
+    <dd class="view">{{person.State}}</dd>
+    <dd class="edit"><input id="state" type="text" value="{{person.State}}"></dd>
+    </br>
+    <dt>Convicted</dt>
+    <dd class="view">{{person.Convicted}}</dd>
+    <dd class="edit"><input id="convicted" type="text" value="{{person.Convicted}}"></dd>
+    </br>
+    <dt>Exonerated</dt>
+    <dd class="view">{{person.Exonerated}}</dd>
+    <dd class="edit"><input id="exonerated" type="text" value="{{person.Exonerated}}"></dd>
+
+    <dd class="edit">
+      <input type="submit" value="Save" onclick="save()">
+      <input type="submit" value="Cancel" onclick="cancel()">
+    </dd>
+  </dl>
+
+  <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+  <script>
+    function edit () {
+      $('.view').hide()
+      $('.edit').show()
+    }
+    function cancel() {
+      $('.view').show()
+      $('.edit').hide()
+    }
+    function save () {
+      $.ajax('/{{person.LastName}}', {
+        method: 'PUT',
+        data: {
+          Age: $('#age').val(),
+          Race: $('#race').val(),
+          State: $('#state').val(),
+          Convicted: $('#convicted').val(),
+          Exonerated: $('#exonerated').val()
+        },
+        complete: function () {
+          cancel();
+          location.reload();
+        }
+      })
+    }
+    function del () {
+      $.ajax('/{{person.LastName}}', {
+        method: 'DELETE',
+        complete: function () {
+          location = '/'
+        }
+      })
+    }
+  </script>
+
+</body>
+</html>

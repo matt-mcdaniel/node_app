@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>User Index</title>
+  <style>
+    * {
+      font-family: Helvetica, Arial, sans-serif;
+    }
+    div {
+      display: flex;
+      align-items: center;
+      padding: 1em;
+      font-size: 1.2em;
+    }
+    div a {
+      padding-left: 0.5em;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Exonerees</h1>
+  {{#each exonerees as |exoneree|}}
+  <div>
+    <a href="/{{exoneree.LastName}}">{{exoneree.FirstName}} {{exoneree.LastName}}</a>
+  </div>
+  {{/each}}
+
+</body>
+</html>
